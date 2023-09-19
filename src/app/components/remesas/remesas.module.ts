@@ -12,7 +12,6 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    CommonModule,
   ]
 })
 export class PagoRemesasModule { }
