@@ -26,9 +26,47 @@ export class RemesasComponent {
     },
     informacionCliente : {
       tipoIdentificacion : 'default',
+      numeroIdentificacion : '',
       paisExpedicion : '',
-      numeroIdentificacion : ''
+      fechaExpedicion : '2021-06-15',
+      departamentoEmite : 'default',
+      fechaVencimiento : '',
+      nacionalidad : '',
+      paisNacimiento : '',
+      numeroCliente : '',
+      primerApellido : '',
+      segundoApellido : '',
+      apellidoCasado : '',
+      primerNombre : '',
+      segundoNombre : '',
+      genero : '',
+      fechaNacimiento : '',
+      estadoCivil : '',
+      ocupacion : '1',
+      telefono : '',
+      correoElectronico : ''
+    },
+    domicilio : {
+      calle : '',
+      numeroExterior : '',
+      numeroInterior : '',
+      colonia : '',
+      pais : '',
+      departamento : 'default',
+      municipio : 'default',
+      codigoPostal : ''
+    },
+    informacionAdicional : {
+      origenRecursos : '',
+      motivo : '',
+      parentezcoRemitente : '',
+      usoDinero : '',
+      transaccionalidad : '',
+      ingresoMensual : '',
+      empresaLabora : ''
+
     }
+
   }
 
   onSelectChange(event:any){
@@ -47,7 +85,33 @@ export class RemesasComponent {
   }
 
   buscaNoId(){
+    //Info Cliente
     this.pagoRemesas.flagExisteId = true;
+    this.pagoRemesas.informacionCliente.fechaExpedicion = '2021-06-15';
+    this.pagoRemesas.informacionCliente.fechaVencimiento = '2025-06-15';
+    this.pagoRemesas.informacionCliente.departamentoEmite = 'default';
+    this.pagoRemesas.informacionCliente.nacionalidad = '1';
+    this.pagoRemesas.informacionCliente.paisNacimiento = '1';
+    this.pagoRemesas.informacionCliente.numeroCliente = '62436810';
+    this.pagoRemesas.informacionCliente.primerApellido = 'PEQUEÑO';
+    this.pagoRemesas.informacionCliente.numeroCliente = 'MARTINEZ';
+    this.pagoRemesas.informacionCliente.primerNombre = 'Antonio';
+    this.pagoRemesas.informacionCliente.genero = '1';
+    this.pagoRemesas.informacionCliente.fechaNacimiento = '1989-07-12';
+    this.pagoRemesas.informacionCliente.estadoCivil = '2';
+    this.pagoRemesas.informacionCliente.ocupacion = '1';
+    this.pagoRemesas.informacionCliente.telefono = '7441702481';
+
+    //Domicilio
+    this.pagoRemesas.domicilio.colonia = 'CENTRO';
+    this.pagoRemesas.domicilio.calle = 'CENTRO';
+    this.pagoRemesas.domicilio.numeroExterior = '704';
+    this.pagoRemesas.domicilio.numeroInterior = '99';
+    this.pagoRemesas.domicilio.pais = '1';
+    this.pagoRemesas.domicilio.codigoPostal = '67890';
+
+    //Info ADICIONAL
+
   }
 
   consultaMtcn(){
