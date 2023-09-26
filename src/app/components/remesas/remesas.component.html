@@ -3,15 +3,18 @@
         <div class="titulo">
            Pago de remesas
         </div>
+        <div class="alert alert-info" role="alert" *ngIf="pagoRemesas.clienteNuevo">
+            Favor llenar información por ser cliente nuevo
+        </div>
         <!-- Contenedor informacion y estatus de remesa -->
-        <div class="cuerpo d-flex flex-row justify-content-between">
+        <div class="infoStatusContainer">
             <!-- Informacion de la remesa -->
-            <div class="col col-7 card">
+            <div class="infoRemesa col col-7 card">
                 <div class="card-header fw-bold">
                     Información de la remesa
                 </div>
                 <div class="card-body">
-                    <div class=" d-flex flex-row justify-content-left mb-3">
+                    <div class="d-flex justify-content-left mb-3">
                         <div class="col col-3">
                             <label for="claveEnvio" class="form-label fw-bold">Clave de envío</label>
                         </div>
@@ -49,7 +52,7 @@
                 </div>
             </div>
             <!-- Estatus de la remesa -->
-            <div class="col col-4 card d-flex justify-content-center text-center p-3">
+            <div class="estatusRemesa col col-4 card d-flex justify-content-center text-center p-3" #estatusRemesa>
                 <div class="input-group mt-1">
                     <label for="estatusRemesa" class="form-label w-100 fw-bold">Estatus de la remesa</label>
                     <input [(ngModel)]="pagoRemesas.informacionRemesa.estatusRemesa" disabled type="text" name="estatusRemesa" class="form-control rounded" aria-label="estatusRemesa">
@@ -58,12 +61,12 @@
                     <label for="fechaEnvio" class="form-label w-100 fw-bold">Fecha envío</label>
                     <input [(ngModel)]="pagoRemesas.informacionRemesa.fechaEnvio" disabled type="text" name="fechaEnvio" class="form-control rounded" aria-label="fechaEnvio">
                 </div>
-                <button class="primaryColor btn w-100 mt-5 text-white" [disabled]="!pagoRemesas.flagExisteMtcn"> <b>Q </b> Pagar </button>
+                <button class="primaryColor btn w-100 mt-5 text-white" [disabled]="!pagoRemesas.flagExisteMtcn"> <strong>Q </strong> Pagar </button>
             </div>
         </div>
 
         <!-- Información del cliente -->
-        <div class="card mt-3 col-12"  *ngIf="pagoRemesas.flagClaveEnvio">
+        <div class="infoCliente card mt-3 col-12"  *ngIf="pagoRemesas.flagClaveEnvio"  >
             <div class="card-header fw-bold">
                 Información del cliente
             </div>
@@ -73,7 +76,7 @@
                         <span>Tipo de identificación</span>
                     </div>
                     <div class="col">
-                        <select [(ngModel)]="pagoRemesas.informacionCliente.tipoIdentificacion" (change)="onSelectChange($event)" name="tipoID" [disabled]="pagoRemesas.flagExisteId" class="form-control">
+                        <select [(ngModel)]="pagoRemesas.informacionCliente.tipoIdentificacion" (change)="onSelectChange($event)" name="tipoID" id="tipoID" [disabled]="pagoRemesas.flagExisteId" class="form-control">
                             <option value="default" selected >Seleccione el tipo de identificación</option>
                             <option value="1">Documento personal de identificación (DPI)</option>
                             <option value="2">Documento familiar de normatividad (DFN)</option>
@@ -83,7 +86,7 @@
                         <span>No. de identificación</span>
                     </div>
                     <div class="col">
-                        <input [(ngModel)]="pagoRemesas.informacionCliente.numeroIdentificacion" [disabled]="pagoRemesas.informacionCliente.tipoIdentificacion == 'default' || pagoRemesas.flagExisteId" type="text" name="numeroID" class="form-control">
+                        <input [(ngModel)]="pagoRemesas.informacionCliente.numeroIdentificacion" [disabled]="pagoRemesas.informacionCliente.tipoIdentificacion == 'default' || pagoRemesas.flagExisteId" type="text" name="numeroID" id="numeroID" class="form-control">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -91,7 +94,7 @@
                         <span>País de expedición</span>
                     </div>
                     <div class="col">
-                        <select [(ngModel)]="pagoRemesas.informacionCliente.paisExpedicion" name="tipoID" class="form-control" disabled>
+                        <select [(ngModel)]="pagoRemesas.informacionCliente.paisExpedicion" name="tipoID" id="tipoID" class="form-control" disabled>
                             <option value="default">Seleccione</option>
                             <option value="1" selected>GUATEMALA</option>
                         </select>
@@ -107,7 +110,7 @@
                             <span>Fecha de expedición</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.fechaExpedicion" type="date" name="fechaExp" class="form-control" value="" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.fechaExpedicion" type="date" name="fechaExp" id="fechaExp" class="form-control" value="" disabled>
                         </div>
                         <div class="col fw-bold">
                             <span>Departamento Emite</span>
@@ -124,13 +127,13 @@
                             <span>Fecha de vencimiento</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.fechaVencimiento" type="date" name="fechaVencimiento" class="form-control">
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.fechaVencimiento" type="date" name="fechaVencimiento" id="fechaVencimiento" class="form-control">
                         </div>
                         <div class="col fw-bold">
                             <span>Nacionalidad</span>
                         </div>
                         <div class="col">
-                            <select [(ngModel)]="pagoRemesas.informacionCliente.nacionalidad" name="nacionalidad" class="form-control">
+                            <select [(ngModel)]="pagoRemesas.informacionCliente.nacionalidad" name="nacionalidad" id="nacionalidad" class="form-control">
                                 <option value="default">seleccione</option>
                                 <option value="1">Alemania</option>
                                 <option value="2">Honduras</option>
@@ -142,7 +145,7 @@
                             <span>País de nacimiento</span>
                         </div>
                         <div class="col">
-                            <select [(ngModel)]="pagoRemesas.informacionCliente.paisNacimiento" name="paisNacimiento" class="form-control" disabled>
+                            <select [(ngModel)]="pagoRemesas.informacionCliente.paisNacimiento" name="paisNacimiento" id="paisNacimiento" class="form-control" disabled>
                                 <option value="default">Seleccione</option>
                                 <option value="1">Guatemala</option>
                             </select>
@@ -155,7 +158,7 @@
                             <span>No de cliente</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.numeroCliente" type="text" name="numCliente" class="form-control" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.numeroCliente" type="text" name="numCliente" id="numCliente" class="form-control" disabled>
                         </div>
                         <div class="col"></div>
                         <div class="col"></div>
@@ -165,13 +168,13 @@
                             <span>Primer apellido</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.primerApellido" type="text" name="primerApellido" class="form-control" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.primerApellido" type="text" name="primerApellido" id="primerApellido" class="form-control" disabled>
                         </div>
                         <div class="col fw-bold">
                             <span>Segundo apellido</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.segundoApellido" type="text" name="segundoApellido" class="form-control" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.segundoApellido" type="text" name="segundoApellido" id="segundoApellido" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -179,7 +182,7 @@
                             <span>Apellido de casado(a)</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.apellidoCasado" type="text" name="tercerApellido" class="form-control" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.apellidoCasado" type="text" name="tercerApellido" id="tercerApellido" class="form-control" disabled>
                         </div>
                         <div class="col"></div>
                         <div class="col"></div>
@@ -195,7 +198,7 @@
                             <span>Segundo nombre</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.segundoNombre" type="text" name="segundoNombre" class="form-control" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.segundoNombre" type="text" name="segundoNombre" id="segundoNombre" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -203,7 +206,7 @@
                             <span>Género</span>
                         </div>
                         <div class="col">
-                            <select [(ngModel)]="pagoRemesas.informacionCliente.genero" name="genero" class="form-control" disabled>
+                            <select [(ngModel)]="pagoRemesas.informacionCliente.genero" name="genero" id="genero" class="form-control" disabled>
                                 <option value="default">Seleccione</option>
                                 <option value="1">Hombre</option>
                                 <option value="2">Mujer</option>
@@ -213,7 +216,7 @@
                             <span>Fecha de nacimieneto</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.fechaNacimiento" type="date" name="fechaNacimiento" class="form-control" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.fechaNacimiento" type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -221,7 +224,7 @@
                             <span>Estado civil</span>
                         </div>
                         <div class="col">
-                            <select [(ngModel)]="pagoRemesas.informacionCliente.estadoCivil" name="estadoCivil" class="form-control">
+                            <select [(ngModel)]="pagoRemesas.informacionCliente.estadoCivil" name="estadoCivil" id="estadoCivil" class="form-control">
                                 <option value="default">Seleccione</option>
                                 <option value="1">Soltero(a)</option>
                                 <option value="2">Casado(a)</option>
@@ -231,7 +234,7 @@
                             <span>Ocupación</span>
                         </div>
                         <div class="col">
-                            <select [(ngModel)]="pagoRemesas.informacionCliente.ocupacion" name="ocupacion" class="form-control" disabled>
+                            <select [(ngModel)]="pagoRemesas.informacionCliente.ocupacion" name="ocupacion" id="ocupacion" class="form-control" disabled>
                                 <option value="default">Seleccione</option>
                                 <option value="1">Profesionista</option>
                             </select>
@@ -242,33 +245,27 @@
                             <span>Teléfono</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.telefono" type="tel" name="telefono" class="form-control">
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.telefono" type="tel" name="telefono" id="telefono" class="form-control">
                         </div>
                         <div class="col fw-bold">
                             <span>Correo Electrónico</span>
                         </div>
                         <div class="col">
-                            <input [(ngModel)]="pagoRemesas.informacionCliente.correoElectronico" type="email" name="correo" class="form-control" disabled>
+                            <input [(ngModel)]="pagoRemesas.informacionCliente.correoElectronico" type="email" name="correo" id="correo" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col fw-bold">
-                            <h4>Domicilio</h4>
+                            <h4 class="row">Domicilio</h4>
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col fw-bold">
+                        <div class="w-25 fw-bold">
                             <span>Calle/Avenida</span>
                         </div>
-                        <div class="col">
-                            <input [(ngModel)]="pagoRemesas.domicilio.calle" type="text" name="calle" class="form-control">
+                        <div class="w-75">
+                            <input [(ngModel)]="pagoRemesas.domicilio.calle" type="text" name="calle" id="calle" class="form-control">
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-    
                     </div>
                     <div class="row mt-3">
                         <div class="col fw-bold">
@@ -285,75 +282,61 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col fw-bold">
+                        <div class="w-25 fw-bold">
                             <span>Colonia/Barrio</span>
                         </div>
-                        <div class="col">
+                        <div class="w-75">
                             <input [(ngModel)]="pagoRemesas.domicilio.colonia" type="text" name="colonia" class="form-control">
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
     
                     </div>
                     <div class="row mt-3">
-                        <div class="col fw-bold">
+                        <div class="w-25 fw-bold">
                             <span>País</span>
                         </div>
-                        <div class="col">
+                        <div class="w-75">
                             <select [(ngModel)]="pagoRemesas.domicilio.pais" name="pais" class="form-control">
                                 <option value="default">Seleccione</option>
                                 <option value="1">Guatemala</option>
                             </select>
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col fw-bold">
+                        <div class="w-25 fw-bold">
                             <span>Departamento</span>
                         </div>
-                        <div class="col">
+                        <div class="2-75">
                             <select [(ngModel)]="pagoRemesas.domicilio.departamento" name="departamento" class="form-control">
                                 <option value="default">Seleccione un departamento</option>
                                 <option value="1">ALTA VERAPAZ</option>
                             </select>
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-    
                     </div>
                     <div class="row mt-3">
-                        <div class="col fw-bold">
+                        <div class="w-25 fw-bold">
                             <span>Municipio</span>
                         </div>
-                        <div class="col">
+                        <div class="w-75">
                             <select [(ngModel)]="pagoRemesas.domicilio.municipio" name="municipio" class="form-control">
                                 <option value="default">Seleccione una ciudad</option>
                                 <option value="1">CHAHAL</option>
                             </select>
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col fw-bold">
+                        <div class="w-25 fw-bold">
                             <span>Código Postal</span>
                         </div>
-                        <div class="col">
+                        <div class="w-50">
                             <input [(ngModel)]="pagoRemesas.domicilio.codigoPostal" type="number" name="codigoPostal" class="form-control">
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
-    
                     </div>
-
                 </div>
-
             </div>
         </div>
 
         <!-- Informacion adicional  -->
-        <div class="card mt-3 col-12" *ngIf="pagoRemesas.flagExisteId">
+        <div class="infoClienteAdicional card mt-3 col-12" *ngIf="pagoRemesas.flagExisteId">
             <div class="card-header fw-bold">
                 Información adicional del cliente
             </div>
@@ -442,7 +425,7 @@
         </div>
 
         <!-- Consulta MTCN -->
-        <button *ngIf="pagoRemesas.flagExisteId" (click)="container.scrollTop = 0; consultaMtcn(); " class="consultarMTCN btn w-25 text-white font-weight-bold mt-4"> <i class="fas fa-redo-alt ml-3"></i>consultar MTCN </button> 
+        <button *ngIf="pagoRemesas.flagExisteId" (click)="container.scrollTop = 170; consultaMtcn(); " class="consultarMTCN btn w-25 text-white font-weight-bold mt-4"> <em class="fas fa-redo-alt ml-3"></em>consultar MTCN </button> 
     </div>
     
 </div>

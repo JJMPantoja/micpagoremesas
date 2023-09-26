@@ -9,6 +9,12 @@
     margin-left: auto;
 }
 
+.infoStatusContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 
 .titulo {
     font-size: 1.1rem !important;
@@ -30,4 +36,36 @@
     background-color: #e7910f!important;
     margin-left: 1rem;
     margin-bottom: 1rem;
+}
+
+/* ---------------------- Responsivo --------------------------*/
+
+/* - - - TABLET - - */
+@media screen and (max-width: 780px) {
+    .infoStatusContainer{
+       flex-direction: column;   
+    }
+    .estatusRemesa, .infoRemesa, .infoRemesa .col-6, .infoRemesa .col-3{
+        width: 100%!important;
+    }
+    .estatusRemesa{
+        margin-top: 10px!important;
+    }
+    .infoCliente .card-body .row, .infoClienteAdicional .card-body .row, .infoRemesa .card-body .d-flex{
+        flex-direction: column!important;
+    }   
+    .w-75, .w-50, .w-25{
+        width: 100%!important;
+    }
+    .infoCliente input, .infoCliente select, .infoRemesa input, .infoRemesa select, .infoClienteAdicional input, .infoClienteAdicional select{
+        margin-bottom: 5px!important;
+    }
+    .consultarMTCN{
+        margin: 0;
+    }
+}
+
+/* - - - MOVIL - - */
+@media screen and (max-width: 600px) {
+    
 }

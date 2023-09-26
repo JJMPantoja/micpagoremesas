@@ -12,7 +12,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class RemesasComponent {
 
+  usersID = ['123','111','222'];
+
   pagoRemesas = {
+    clienteNuevo : false,
     flagClaveEnvio : false,
     flagExisteId : false,
     flagExisteMtcn : false,
@@ -57,34 +60,37 @@ export class RemesasComponent {
       codigoPostal : ''
     },
     informacionAdicional : {
-      origenRecursos : '',
-      motivo : '',
-      parentezcoRemitente : '',
-      usoDinero : '',
-      transaccionalidad : '',
+      origenRecursos : 'default',
+      motivo : 'default',
+      parentezcoRemitente : 'default',
+      usoDinero : 'default',
+      transaccionalidad : 'default',
       ingresoMensual : '',
       empresaLabora : ''
 
     }
 
-  }
+  };
 
-  onSelectChange(event:any){
-    let seleccionado = (event.target as HTMLSelectElement).value;
+  onSelectChange(event:Event){
+    const seleccionado = (event.target as HTMLSelectElement).value;
     /* -------------- Por si se quiere el texto del option -------------
     let seleccionadoTexto = (event.target as HTMLSelectElement).selectedOptions[0];
     */
-    this.pagoRemesas.informacionCliente.tipoIdentificacion = seleccionado ?? ''
-    console.log('ng model :  ' + this.pagoRemesas.informacionCliente.tipoIdentificacion)
+    this.pagoRemesas.informacionCliente.tipoIdentificacion = seleccionado ?? '';
   }
 
   buscaClaveEnvio(){
     this.pagoRemesas.flagClaveEnvio = true;
-    this.pagoRemesas.informacionRemesa.estatusRemesa = "MTCN disponible para cobro";
-    this.pagoRemesas.informacionCliente.paisExpedicion = "1"
+    this.pagoRemesas.informacionRemesa.estatusRemesa = 'MTCN disponible para cobro';
+    this.pagoRemesas.informacionCliente.paisExpedicion = '1';
   }
 
-  buscaNoId(){
+  buscaNoId() {
+    this.usersID.includes(this.pagoRemesas.informacionCliente.numeroIdentificacion) ? this.llenaFormulario() : console.log('NO EXISTE USUARIO');
+  }
+
+  llenaFormulario(){
     //Info Cliente
     this.pagoRemesas.flagExisteId = true;
     this.pagoRemesas.informacionCliente.fechaExpedicion = '2021-06-15';
@@ -111,7 +117,6 @@ export class RemesasComponent {
     this.pagoRemesas.domicilio.codigoPostal = '67890';
 
     //Info ADICIONAL
-
   }
 
   consultaMtcn(){
