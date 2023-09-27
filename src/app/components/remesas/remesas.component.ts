@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -121,6 +122,36 @@ export class RemesasComponent {
 
   consultaMtcn(){
     this.pagoRemesas.flagExisteMtcn = true;
+  }
+
+  pagarRemesa(){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn successButtonSweetAlert',
+        cancelButton: 'btn cancelButtonSweetAlert',
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons.fire({
+        title:'¿Seguro que desea pagar este giro?',
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonColor: '#fff',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#24654b',
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Pago realizado correctamente',
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#24654b',
+        });
+      }
+    });
   }
 
    
