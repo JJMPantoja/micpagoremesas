@@ -13,7 +13,58 @@ import Swal from 'sweetalert2';
 })
 export class RemesasComponent {
 
-  usersID = ['123','111','222'];
+  usersID = ['123','111'];
+
+  users = [
+    {
+      idUser : '123',
+      fechaExpedicion : '2021-06-15',
+      fechaVencimiento : '2025-06-15',
+      departamentoEmite : 'default',
+      nacionalidad : '1',
+      paisNacimiento : '1',
+      numeroCliente : '62436810',
+      primerApellido : 'PEQUEÑO',
+      segundoApellido : 'MARTINEZ',
+      primerNombre : 'ANTONIO',
+      genero : '1',
+      fechaNacimiento : '1989-07-12',
+      estadoCivil : '2',
+      ocupacion : '1',
+      telefono : '7441702481',
+      //Domicilio
+      colonia : 'CENTRO',
+      calle : 'CENTRO',
+      numeroExterior : '704',
+      numeroInterior : '99',
+      pais : '1',
+      codigoPostal : '67890'
+    },
+    {
+      idUser : '321',
+      fechaExpedicion : '',
+      fechaVencimiento : '',
+      departamentoEmite : 'default',
+      nacionalidad : '',
+      paisNacimiento : '',
+      numeroCliente : '',
+      primerApellido : '',
+      segundoApellido : '',
+      primerNombre : '',
+      genero : '',
+      fechaNacimiento : '',
+      estadoCivil : '',
+      ocupacion : '',
+      telefono : '',
+      //Domicilio
+      colonia : '',
+      calle : '',
+      numeroExterior : '',
+      numeroInterior : '',
+      pais : '',
+      codigoPostal : ''
+    }
+  ];
 
   pagoRemesas = {
     clienteNuevo : false,
@@ -75,9 +126,6 @@ export class RemesasComponent {
 
   onSelectChange(event:Event){
     const seleccionado = (event.target as HTMLSelectElement).value;
-    /* -------------- Por si se quiere el texto del option -------------
-    let seleccionadoTexto = (event.target as HTMLSelectElement).selectedOptions[0];
-    */
     this.pagoRemesas.informacionCliente.tipoIdentificacion = seleccionado ?? '';
   }
 
@@ -88,34 +136,36 @@ export class RemesasComponent {
   }
 
   buscaNoId() {
-    this.usersID.includes(this.pagoRemesas.informacionCliente.numeroIdentificacion) ? this.llenaFormulario() : console.log('NO EXISTE USUARIO');
+    const usuario = this.users.filter((user) => user.idUser === this.pagoRemesas.informacionCliente.numeroIdentificacion);
+    console.log("USUARIO : ", usuario);
+    usuario ? this.llenaFormulario(usuario) : console.log("NO EXISTE USUARIO");
   }
 
-  llenaFormulario(){
+  llenaFormulario(usuario:any){
     //Info Cliente
     this.pagoRemesas.flagExisteId = true;
-    this.pagoRemesas.informacionCliente.fechaExpedicion = '2021-06-15';
-    this.pagoRemesas.informacionCliente.fechaVencimiento = '2025-06-15';
-    this.pagoRemesas.informacionCliente.departamentoEmite = 'default';
-    this.pagoRemesas.informacionCliente.nacionalidad = '1';
-    this.pagoRemesas.informacionCliente.paisNacimiento = '1';
-    this.pagoRemesas.informacionCliente.numeroCliente = '62436810';
-    this.pagoRemesas.informacionCliente.primerApellido = 'PEQUEÑO';
-    this.pagoRemesas.informacionCliente.numeroCliente = 'MARTINEZ';
-    this.pagoRemesas.informacionCliente.primerNombre = 'Antonio';
-    this.pagoRemesas.informacionCliente.genero = '1';
-    this.pagoRemesas.informacionCliente.fechaNacimiento = '1989-07-12';
-    this.pagoRemesas.informacionCliente.estadoCivil = '2';
-    this.pagoRemesas.informacionCliente.ocupacion = '1';
-    this.pagoRemesas.informacionCliente.telefono = '7441702481';
+    this.pagoRemesas.informacionCliente.fechaExpedicion = usuario[0].fechaExpedicion ;
+    this.pagoRemesas.informacionCliente.fechaVencimiento = usuario[0].fechaVencimiento ;
+    this.pagoRemesas.informacionCliente.departamentoEmite = usuario[0].departamentoEmite ;
+    this.pagoRemesas.informacionCliente.nacionalidad = usuario[0].nacionalidad ;
+    this.pagoRemesas.informacionCliente.paisNacimiento = usuario[0].paisNacimiento ;
+    this.pagoRemesas.informacionCliente.numeroCliente = usuario[0].numeroCliente ;
+    this.pagoRemesas.informacionCliente.primerApellido = usuario[0].primerApellido ;
+    this.pagoRemesas.informacionCliente.segundoApellido = usuario[0].segundoApellido ;
+    this.pagoRemesas.informacionCliente.primerNombre = usuario[0].primerNombre ;
+    this.pagoRemesas.informacionCliente.genero = usuario[0].genero ;
+    this.pagoRemesas.informacionCliente.fechaNacimiento = usuario[0].fechaNacimiento ;
+    this.pagoRemesas.informacionCliente.estadoCivil = usuario[0].estadoCivil ;
+    this.pagoRemesas.informacionCliente.ocupacion = usuario[0].ocupacion ;
+    this.pagoRemesas.informacionCliente.telefono = usuario[0].telefono ;
 
     //Domicilio
-    this.pagoRemesas.domicilio.colonia = 'CENTRO';
-    this.pagoRemesas.domicilio.calle = 'CENTRO';
-    this.pagoRemesas.domicilio.numeroExterior = '704';
-    this.pagoRemesas.domicilio.numeroInterior = '99';
-    this.pagoRemesas.domicilio.pais = '1';
-    this.pagoRemesas.domicilio.codigoPostal = '67890';
+    this.pagoRemesas.domicilio.colonia = usuario[0].colonia ;
+    this.pagoRemesas.domicilio.calle = usuario[0].calle ;
+    this.pagoRemesas.domicilio.numeroExterior = usuario[0].numeroExterior ;
+    this.pagoRemesas.domicilio.numeroInterior = usuario[0].numeroInterior ;
+    this.pagoRemesas.domicilio.pais = usuario[0].pais ;
+    this.pagoRemesas.domicilio.codigoPostal = usuario[0].codigoPostal ;
 
     //Info ADICIONAL
   }
