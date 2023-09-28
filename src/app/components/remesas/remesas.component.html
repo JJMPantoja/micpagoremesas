@@ -212,8 +212,7 @@
                 name="fechaExp"
                 id="fechaExp"
                 class="form-control"
-                value=""
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
             <div class="col fw-bold">
@@ -269,7 +268,7 @@
                 name="paisNacimiento"
                 id="paisNacimiento"
                 class="form-control"
-                disabled>
+                [disabled]="pagoRemesas.flagRegistrado">
                 <option value="default">Seleccione</option>
                 <option value="1">Guatemala</option>
               </select>
@@ -305,7 +304,7 @@
                 name="primerApellido"
                 id="primerApellido"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
             <div class="col fw-bold">
@@ -318,7 +317,7 @@
                 name="segundoApellido"
                 id="segundoApellido"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
           </div>
@@ -333,7 +332,7 @@
                 name="tercerApellido"
                 id="tercerApellido"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
             <div class="col"></div>
@@ -350,7 +349,7 @@
                 name="primerNombre"
                 id="primerNombre"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
             <div class="col fw-bold">
@@ -363,7 +362,7 @@
                 name="segundoNombre"
                 id="segundoNombre"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
           </div>
@@ -377,7 +376,7 @@
                 name="genero"
                 id="genero"
                 class="form-control"
-                disabled>
+                [disabled]="pagoRemesas.flagRegistrado">
                 <option value="default">Seleccione</option>
                 <option value="1">Hombre</option>
                 <option value="2">Mujer</option>
@@ -393,7 +392,7 @@
                 name="fechaNacimiento"
                 id="fechaNacimiento"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
           </div>
@@ -406,8 +405,7 @@
                 [(ngModel)]="pagoRemesas.informacionCliente.estadoCivil"
                 name="estadoCivil"
                 id="estadoCivil"
-                class="form-control"
-              >
+                class="form-control">
                 <option value="default">Seleccione</option>
                 <option value="1">Soltero(a)</option>
                 <option value="2">Casado(a)</option>
@@ -422,7 +420,7 @@
                 name="ocupacion"
                 id="ocupacion"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               >
                 <option value="default">Seleccione</option>
                 <option value="1">Profesionista</option>
@@ -452,7 +450,7 @@
                 name="correo"
                 id="correo"
                 class="form-control"
-                disabled
+                [disabled]="pagoRemesas.flagRegistrado"
               />
             </div>
           </div>
@@ -575,6 +573,13 @@
               />
             </div>
           </div>
+          <div class="row mt-4" *ngIf="!pagoRemesas.flagRegistrado">
+            <div class="col">
+              <button 
+              (click)="registrarCliente()"
+              class="registrarCliente btn primaryColor text-white">Registrar cliente</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -582,8 +587,7 @@
     <!-- Informacion adicional  -->
     <div
       class="infoClienteAdicional card mt-3 col-12"
-      *ngIf="pagoRemesas.flagExisteId"
-    >
+      *ngIf="pagoRemesas.flagExisteId">
       <div class="card-header fw-bold">Información adicional del cliente</div>
       <div class="card-body">
         <div class="row mt-3">
@@ -666,8 +670,7 @@
               [(ngModel)]="pagoRemesas.informacionAdicional.transaccionalidad"
               id="transaccionalidad"
               name="transaccionalidad"
-              class="form-control"
-            >
+              class="form-control">
               <option value="default">Indique su transaccionalidad</option>
               <option value="1">1 - 5 OPERACIONES</option>
             </select>
@@ -709,6 +712,7 @@
     <!-- Consulta MTCN -->
     <button
       *ngIf="pagoRemesas.flagExisteId" 
+      [disabled]="!pagoRemesas.flagRegistrado"
       (click)="container.scrollTop = 170; consultaMtcn()"
       class="consultarMTCN btn w-25 text-white font-weight-bold mt-4">
       <em class="fas fa-redo-alt ml-3"></em>consultar MTCN

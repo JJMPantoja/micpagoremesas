@@ -17,6 +17,7 @@ export class RemesasComponent {
 
   users = [
     {
+      registrado : true,
       idUser : '123',
       fechaExpedicion : '2021-06-15',
       fechaVencimiento : '2025-06-15',
@@ -41,6 +42,7 @@ export class RemesasComponent {
       codigoPostal : '67890'
     },
     {
+      registrado : false,
       idUser : '321',
       fechaExpedicion : '',
       fechaVencimiento : '',
@@ -59,8 +61,8 @@ export class RemesasComponent {
       //Domicilio
       colonia : '',
       calle : '',
-      numeroExterior : '',
-      numeroInterior : '',
+      numeroExterior : '999',
+      numeroInterior : '999',
       pais : '',
       codigoPostal : ''
     }
@@ -71,6 +73,7 @@ export class RemesasComponent {
     flagClaveEnvio : false,
     flagExisteId : false,
     flagExisteMtcn : false,
+    flagRegistrado : false,
     informacionRemesa : {
       claveEnvio : '',
       remitente : '',
@@ -83,8 +86,8 @@ export class RemesasComponent {
       tipoIdentificacion : 'default',
       numeroIdentificacion : '',
       paisExpedicion : '',
-      fechaExpedicion : '2021-06-15',
-      departamentoEmite : 'default',
+      fechaExpedicion : '',
+      departamentoEmite : '',
       fechaVencimiento : '',
       nacionalidad : '',
       paisNacimiento : '',
@@ -119,7 +122,6 @@ export class RemesasComponent {
       transaccionalidad : 'default',
       ingresoMensual : '',
       empresaLabora : ''
-
     }
 
   };
@@ -143,6 +145,7 @@ export class RemesasComponent {
 
   llenaFormulario(usuario:any){
     //Info Cliente
+    this.pagoRemesas.flagRegistrado = usuario[0].registrado;
     this.pagoRemesas.flagExisteId = true;
     this.pagoRemesas.informacionCliente.fechaExpedicion = usuario[0].fechaExpedicion ;
     this.pagoRemesas.informacionCliente.fechaVencimiento = usuario[0].fechaVencimiento ;
@@ -196,6 +199,36 @@ export class RemesasComponent {
         Swal.fire({
           icon: 'success',
           title: 'Pago realizado correctamente',
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#24654b',
+        });
+      }
+    });
+  }
+
+  registrarCliente(){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn successButtonSweetAlert',
+        cancelButton: 'btn cancelButtonSweetAlert',
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons.fire({
+        title:'¿Seguro que deseas  crear este cliente?',
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonColor: '#fff',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#24654b',
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Cliente registrado con éxito',
           showConfirmButton: true,
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#24654b',
