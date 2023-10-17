@@ -1,0 +1,682 @@
+<!-- Información del cliente -->
+<!-- div -->
+<div class="infoCliente card mt-3 col-12" *ngIf="pagoRemesas.flagClaveEnvio">
+  <!-- div -->
+  <div class="card-header fw-bold">Información del cliente</div>
+  <!-- div -->
+  <div class="card-body">
+    <!-- div -->
+    <div class="row">
+      <!-- div -->
+      <div class="col fw-bold">
+        <!-- p -->
+        <p>Tipo de identificación</p>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="col">
+        <select
+          [(ngModel)]="pagoRemesas.informacionCliente.tipoIdentificacion"
+          (change)="onSelectChange($event)"
+          name="tipoID"
+          id="tipoID"
+          [disabled]="pagoRemesas.flagExisteId"
+          class="form-control"
+        >
+          <option value="default" selected>
+            Seleccione el tipo de identificación
+          </option>
+          <option value="1">Documento personal de identificación (DPI)</option>
+          <option value="2">Documento familiar de normatividad (DFN)</option>
+        </select>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="col fw-bold">
+        <!-- p -->
+        <p>No. de identificación</p>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="col">
+        <label for=""></label>
+        <input
+          [(ngModel)]="pagoRemesas.informacionCliente.numeroIdentificacion"
+          [disabled]="
+            pagoRemesas.informacionCliente.tipoIdentificacion == 'default' ||
+            pagoRemesas.flagExisteId
+          "
+          type="text"
+          name="numeroID"
+          id="numeroID"
+          class="form-control"
+        />
+        <!-- fin div -->
+      </div>
+      <!-- fin div -->
+    </div>
+    <!-- div -->
+    <div class="row mt-3">
+      <!-- div -->
+      <div class="col fw-bold">
+        <!-- p -->
+        <p>País de expedición</p>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="col">
+        <select
+          [(ngModel)]="pagoRemesas.informacionCliente.paisExpedicion"
+          name="paisExpedicion"
+          id="paisExpedicion"
+          class="form-control"
+          disabled
+        >
+          <option value="default">Seleccione</option>
+          <option value="1" selected>GUATEMALA</option>
+        </select>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="col"></div>
+      <!-- div -->
+      <div class="col">
+        <button
+          (click)="buscaNoId()"
+          [disabled]="
+            !pagoRemesas.informacionCliente.numeroIdentificacion ||
+            pagoRemesas.flagExisteId
+          "
+          class="primaryColor btn w-100 text-white fw-bold"
+        >
+          Buscar
+        </button>
+        <!-- fin div -->
+      </div>
+      <!-- fin div -->
+    </div>
+    <!-- div -->
+    <div *ngIf="pagoRemesas.flagExisteId">
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p>Fecha de expedición</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.fechaExpedicion"
+            type="date"
+            name="fechaExp"
+            id="fechaExp"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p>Departamento Emite</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <select
+            [(ngModel)]="pagoRemesas.informacionCliente.departamentoEmite"
+            name="depEmite"
+            id="depEmite"
+            class="form-control"
+          >
+            <option value="default">seleccione un departamento</option>
+            <option value="1">ALTA VERAPAZ</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p>Fecha de vencimiento</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.fechaVencimiento"
+            type="date"
+            name="fechaVencimiento"
+            id="fechaVencimiento"
+            class="form-control"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="nacionalidad">Nacionalidad</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <select
+            [(ngModel)]="pagoRemesas.informacionCliente.nacionalidad"
+            name="nacionalidad"
+            id="nacionalidad"
+            class="form-control"
+          >
+            <option value="default">seleccione</option>
+            <option value="1">Alemania</option>
+            <option value="2">Honduras</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="paisNacimiento">País de nacimiento</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <select
+            [(ngModel)]="pagoRemesas.informacionCliente.paisNacimiento"
+            name="paisNacimiento"
+            id="paisNacimiento"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          >
+            <option value="default">Seleccione</option>
+            <option value="1">Guatemala</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col"></div>
+        <!-- div -->
+        <div class="col"></div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="numCliente">No de cliente</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.numeroCliente"
+            type="text"
+            name="numCliente"
+            id="numCliente"
+            class="form-control"
+            disabled
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col"></div>
+        <!-- div -->
+        <div class="col"></div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="primerApellido">Primer apellido</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.primerApellido"
+            type="text"
+            name="primerApellido"
+            id="primerApellido"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="segundoApellido">Segundo apellido</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.segundoApellido"
+            type="text"
+            name="segundoApellido"
+            id="segundoApellido"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="tercerApellido">Apellido de casado(a)</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.apellidoCasado"
+            type="text"
+            name="tercerApellido"
+            id="tercerApellido"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col"></div>
+        <!-- div -->
+        <div class="col"></div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="primerNombre">Primer nombre</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.primerNombre"
+            type="text"
+            name="primerNombre"
+            id="primerNombre"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="segundoNombre">Segundo nombre</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.segundoNombre"
+            type="text"
+            name="segundoNombre"
+            id="segundoNombre"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="genero">Género</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <select
+            [(ngModel)]="pagoRemesas.informacionCliente.genero"
+            name="genero"
+            id="genero"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          >
+            <option value="default">Seleccione</option>
+            <option value="1">Hombre</option>
+            <option value="2">Mujer</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="fechaNacimiento">Fecha de nacimieneto</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.fechaNacimiento"
+            type="date"
+            name="fechaNacimiento"
+            id="fechaNacimiento"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="estadoCivil">Estado civil</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <select
+            [(ngModel)]="pagoRemesas.informacionCliente.estadoCivil"
+            name="estadoCivil"
+            id="estadoCivil"
+            class="form-control"
+          >
+            <option value="default">Seleccione</option>
+            <option value="1">Soltero(a)</option>
+            <option value="2">Casado(a)</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="ocupacion">Ocupación</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <select
+            [(ngModel)]="pagoRemesas.informacionCliente.ocupacion"
+            name="ocupacion"
+            id="ocupacion"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          >
+            <option value="default">Seleccione</option>
+            <option value="1">Profesionista</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="telefono">Teléfono</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.telefono"
+            type="tel"
+            name="telefono"
+            id="telefono"
+            class="form-control"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="correo">Correo Electrónico</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.informacionCliente.correoElectronico"
+            type="email"
+            name="correo"
+            id="correo"
+            class="form-control"
+            [disabled]="pagoRemesas.flagRegistrado"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <h4>Domicilio</h4>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="w-25 fw-bold">
+          <!-- p -->
+          <p for="calle">Calle/Avenida</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="w-75">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.domicilio.calle"
+            type="text"
+            name="calle"
+            id="calle"
+            class="form-control"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="noExterior">No Exterior</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.domicilio.numeroExterior"
+            type="text"
+            name="noExterior"
+            id="noExterior"
+            class="form-control"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col fw-bold">
+          <!-- p -->
+          <p for="noInterior">No Interior</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="col">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.domicilio.numeroInterior"
+            type="text"
+            name="noInterior"
+            id="noInterior"
+            class="form-control"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="w-25 fw-bold">
+          <!-- p -->
+          <p for="colonia">Colonia/Barrio</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="w-75">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.domicilio.colonia"
+            type="text"
+            name="colonia"
+            id="colonia"
+            class="form-control"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="w-25 fw-bold">
+          <!-- p -->
+          <p for="pais">País</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="w-75">
+          <select
+            [(ngModel)]="pagoRemesas.domicilio.pais"
+            name="pais"
+            id="pais"
+            class="form-control"
+          >
+            <option value="default">Seleccione</option>
+            <option value="1">Guatemala</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="w-25 fw-bold">
+          <!-- p -->
+          <p for="departamento">Departamento</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="w-75">
+          <select
+            [(ngModel)]="pagoRemesas.domicilio.departamento"
+            name="departamento"
+            id="departamento"
+            class="form-control"
+          >
+            <option value="default">Seleccione un departamento</option>
+            <option value="1">ALTA VERAPAZ</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="w-25 fw-bold">
+          <!-- p -->
+          <p for="municipio">Municipio</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="w-75">
+          <select
+            [(ngModel)]="pagoRemesas.domicilio.municipio"
+            name="municipio"
+            id="municipio"
+            class="form-control"
+          >
+            <option value="default">Seleccione una ciudad</option>
+            <option value="1">CHAHAL</option>
+          </select>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-3">
+        <!-- div -->
+        <div class="w-25 fw-bold">
+          <!-- p -->
+          <p for="codigoPostal">Código Postal</p>
+          <!-- fin div -->
+        </div>
+        <!-- div -->
+        <div class="w-50">
+          <label for=""></label>
+          <input
+            [(ngModel)]="pagoRemesas.domicilio.codigoPostal"
+            type="number"
+            name="codigoPostal"
+            id="codigoPostal"
+            class="form-control"
+          />
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- div -->
+      <div class="row mt-4" *ngIf="!pagoRemesas.flagRegistrado">
+        <!-- div -->
+        <div class="col">
+          <button
+            (click)="registrarCliente()"
+            class="registrarCliente btn primaryColor text-white"
+          >
+            Registrar cliente
+          </button>
+          <!-- fin div -->
+        </div>
+        <!-- fin div -->
+      </div>
+      <!-- fin div -->
+    </div>
+    <!-- fin div -->
+  </div>
+  <!-- fin div -->
+</div>

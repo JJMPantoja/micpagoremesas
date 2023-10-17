@@ -8,9 +8,8 @@ describe('RemesasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RemesasComponent ]
-    })
-    .compileComponents();
+      declarations: [RemesasComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RemesasComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,9 @@ describe('RemesasComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Arreglo de ids de usuarios', () => {
+    expect(component.usersID).toContain('123');
   });
 });
